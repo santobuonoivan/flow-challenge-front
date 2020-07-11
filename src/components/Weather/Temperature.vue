@@ -78,7 +78,7 @@ section {
 }
 
 .temperature__value {
-    font-size: 7em;
+    font-size: 5em;
     color: rgba(255, 255, 255, 0.75);
 }
 

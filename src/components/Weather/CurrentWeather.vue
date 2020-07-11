@@ -2,35 +2,35 @@
   <div>
     <div id="weather">
       <main>
-      <Measurements
-        :cloudiness="this.forecast.cloudiness"
-        :windSpeed="this.forecast.windSpeed"
-        :humidity="this.forecast.humidity"
-      ></Measurements>
+        <Measurements
+          :cloudiness="this.forecast.cloudiness"
+          :windSpeed="this.forecast.windSpeed"
+          :humidity="this.forecast.humidity"
+        ></Measurements>
 
-      <Temperature
-        :value="this.forecast.temperatureValue"
-        :high="this.forecast.temperatureHigh"
-        :low="this.forecast.temperatureLow"
-      ></Temperature>
+        <Temperature
+          :value="this.forecast.temperatureValue"
+          :high="this.forecast.temperatureHigh"
+          :low="this.forecast.temperatureLow"
+        ></Temperature>
 
-      <Weather
-        :location="this.forecast.location"
-        :description="this.forecast.description"
-        :icon="this.forecast.weatherIcon"
-      ></Weather>
+        <Weather
+          :location="this.forecast.location"
+          :description="this.forecast.description"
+          :icon="this.forecast.weatherIcon"
+        ></Weather>
       </main>
-    </div>    
+    </div>
   </div>
 </template>
 
 
 
 <script>
-import Weather from "./Weather";
-import Temperature from "./Temperature";
-import Measurements from "./Measurements";
-//import WeatherForecast from "../services/WeatherForecast";
+import Weather from "./Weather.vue";
+import Temperature from "./Temperature.vue";
+import Measurements from "./Measurements.vue";
+import getWeatherIcon from "../../services/weatherIcons";
 import { getCurrentWeatherData } from "./../../api";
 
 export default {
@@ -38,7 +38,7 @@ export default {
   props: {
     city: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   components: {
@@ -95,29 +95,22 @@ export default {
       this.forecast.temperatureValue = Math.round(data.main.temp);
       this.forecast.temperatureHigh = Math.round(data.main.temp_max);
       this.forecast.temperatureLow = Math.round(data.main.temp_min);
-      this.forecast.location = this.formatLocation(data.name, data.sys.country);
+      this.forecast.location = this.formatLocation(data.name, data.sys.country);      
       this.forecast.description = data.weather[0].description;
-      this.forecast.weatherIcon = this.getWeatherIcon(data.weather[0].id);
+      this.forecast.weatherIcon = getWeatherIcon(data.weather[0].id);
     },
+
     /*
-     * Get weather icon based on id.
+     * Format location.
      *
-     * @param {Number} id - Weather ID.
+     * @param {String} city - Current city.
+     * @param {String} country - Current country.
      */
-    getWeatherIcon(id) {
-      if (this.isThunderstorm(id)) {
-        return require("../../assets/icons/weather/thunderstorm.svg");
+    formatLocation(city, country) {
+      if (city === null && country === null) {
+        return "";
       }
-
-      if (this.isDrizzle(id) || this.isRain(id)) {
-        return require("../../assets/icons/weather/rain.svg");
-      }
-
-      if (this.isSnow(id)) {
-        return require("../../assets/icons/weather/snow.svg");
-      }
-
-      return require("../../assets/icons/weather/cloud.svg");
+      return `${city}, ${country}`;
     },
 
     /*
@@ -144,56 +137,6 @@ export default {
           country: null
         }
       };
-    },
-
-    /*
-     * Format location.
-     *
-     * @param {String} city - Current city.
-     * @param {String} country - Current country.
-     */
-    formatLocation(city, country) {
-      if (city === null && country === null) {
-        return "";
-      }
-
-      return `${city}, ${country}`;
-    },
-
-    /*
-     * Check if under Thunderstorm category.
-     *
-     * @param {Number} id - Weather ID.
-     */
-    isThunderstorm(id) {
-      return id > 199 && id < 233;
-    },
-
-    /*
-     * Check if under Drizzle category.
-     *
-     * @param {Number} id - Weather ID.
-     */
-    isDrizzle(id) {
-      return id > 299 && id < 322;
-    },
-
-    /*
-     * Check if under Rain category.
-     *
-     * @param {Number} id - Weather ID.
-     */
-    isRain(id) {
-      return id > 499 && id < 532;
-    },
-
-    /*
-     * Check if under Snow category.
-     *
-     * @param {Number} id - Weather ID.
-     */
-    isSnow(id) {
-      return id > 599 && id < 623;
     }
   }
 };
@@ -203,7 +146,7 @@ export default {
 main {
   width: 100%;
   height: 100%;
-  background-position: center;
+  background-position: left;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: rgb(115, 216, 177);
@@ -211,7 +154,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
+  align-items: left;
 
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
@@ -219,8 +162,7 @@ main {
 @media screen and (min-width: 450px) {
   main {
     width: 330px;
-    height: 600px;
-
+    height: 400px;
     border-radius: 5px;
   }
 }

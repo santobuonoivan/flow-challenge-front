@@ -37,7 +37,6 @@ export default {
 section {
     width: 100%;
     padding-top: 25px;
-
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

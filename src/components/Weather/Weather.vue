@@ -13,7 +13,8 @@ export default {
     props: {
         location: {
             type: String,
-            required: true
+            default: '',
+            required: false
         },
         description: {
             type: String,
@@ -51,7 +52,6 @@ section {
 }
 
 .weather__icon {
-    width: 12em;
-    padding-bottom: 9em;
+    width: 10em;    
 }
 </style>

@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <b-container v-if="forecastExtended">
-      <b-row name>
-        <b-col v-for="day in forecastExtended.list" :key="day.id">
-          <img v-bind:src="day.day.condition.icon" />
-          <p>Avg Temp: {{day.day.avgtemp_c}}°c</p>
-          <p>{{day.day.condition.text}}</p>
-          <p>{{day.date}}</p>
-        </b-col>
-      </b-row>
-    </b-container>
-  </div>
+  
+    <div class="forecast">
+      <ForecastItem v-for="item in forecastExtended" :key="item.id" :day="item" />
+    </div>
+  
 </template>
 
 <script>
 import { getForecastData } from "@/api";
+import transformForecast from "@/services/transformForecast";
+import ForecastItem from "./ForecastItem.vue";
 
 export default {
   name: "Forecast",
+  components: {
+    ForecastItem
+  },
   props: {
     city: {
       type: String,
@@ -43,17 +41,26 @@ export default {
     getForecastData() {
       getForecastData(this.city)
         .then(response => {
-          this.forecastExtended = response;
+          this.forecastExtended = this.populate(response);
         })
         .catch(err => console.log(err));
-    },    
+    },
+    /*
+     * Set new data.
+     *
+     * @param {Object} data - Weather forecast json data.
+     */
+    populate(data) {
+      return transformForecast(data);
+    }
   }
 };
 </script>
 
 <style>
-.currentWeatherIcon {
-  width: 10%;
-  height: 10%;
+.forecast {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;  
 }
 </style>
