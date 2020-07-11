@@ -61,6 +61,6 @@ export default {
 .forecast {
   display: flex;
   width: 100%;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
 }
 </style>
