@@ -12,7 +12,7 @@
       <CurrentWeather :city="$store.getters.getCity"/>
     </div>
     <div id="forecastData">
-      <Forecast />
+      <Forecast  :city="$store.getters.getCity"/>
     </div>
   </div>
 </template>
