@@ -16,7 +16,12 @@ export default {
 </script>
 
 <style>
-#app {
-  
+@import "./../node_modules/bootstrap/dist/css/bootstrap.min.css";
+#app {  
+    display: flex;
+    padding-left: 0px;
+    width: 100%;    
+    justify-content: center;
 }
+
 </style>

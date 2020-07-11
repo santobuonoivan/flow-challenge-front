@@ -1,4 +1,4 @@
-const API_URL = 'localhost:5001';
+const API_URL = 'http://localhost:5001';
 
 // get current weather data
 export const getCurrentWeatherData = city => {

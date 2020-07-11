@@ -6,21 +6,17 @@
       class="mb-3"
       value-field="item"
       text-field="name"
+      @change="setCity"
     ></b-form-select>    
   </div>
 </template>
 
 <script>
 export default {
-  name: "CitySelector",
-  props: {
-      city: {
-          type: String,
-          default: ''
-      }
-  },
+  name: "CitySelector",  
   data() {
-    return {      
+    return {   
+      city: "",   
       options: [
         { item: "", name: "Seleccione una Ciudad" },
         { item: "Quilmes", name: "Quilmes" },
@@ -29,6 +25,11 @@ export default {
         { item: "Miami", name: "Miami" }
       ]
     };
+  },
+  methods: {
+    setCity() {
+      this.$store.dispatch("setCityAction", this.city);
+    }
   }
 };
 </script>

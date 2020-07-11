@@ -1,11 +1,11 @@
 <template>
-    <div>
-        forecast wheather data
-    </div>
+  <div>
+    
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Forecast'
-}
+  name: "Forecast"
+};
 </script>
